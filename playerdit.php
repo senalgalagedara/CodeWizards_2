@@ -1,5 +1,5 @@
 <?php
-class Player {
+class playerdit {
     private $player_id;
     private $p_name;
     private $role;
@@ -81,6 +81,32 @@ class Player {
     public function calcValue() {
         $this->price = (9 * ($this->P_point) + 100) * 100;
         return $this->price;
+    }
+
+    public static function getById($id) {
+        include("config.php");
+
+        $stmt = $conn->prepare("SELECT * FROM player WHERE player_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+
+            $player = new playerdit(
+                $data['playername'],
+                $data['role'],
+                $data['p_point'],
+                $data['bat_SR'],
+                $data['ball_SR'],
+                $data['Econ_rate'],
+                $data['Price']
+            );
+
+            $player->player_id = $data['player_id'];
+            return $player;
+        }
+        return null;
     }
 }
 ?>

@@ -1,8 +1,6 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "ufcg");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include("config.php");
+require_once 'playerdit.php';
 
 $result = $conn->query("SELECT * FROM player ORDER BY player_id DESC");
 ?>
@@ -31,8 +29,11 @@ $result = $conn->query("SELECT * FROM player ORDER BY player_id DESC");
         <tbody>
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr>
-                    
-                    <td><?php echo $row["playername"]; ?></td>
+                    <td>
+                        <a href="player_details.php?id=<?php echo $row["player_id"]; ?>">
+                            <?php echo $row["playername"]; ?>
+                        </a>
+                    </td>
                     <td><?php echo $row["role"]; ?></td>
                     <td><?php echo $row["Price"]; ?></td>
                 </tr>

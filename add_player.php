@@ -1,12 +1,12 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "ufcg");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include("config.php");
+require_once 'playerdit.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["playername"];
     $role = $_POST["role"];
+
+    $player = new playerdit($name, $role);
 
     $stmt = $conn->prepare("INSERT INTO player (player_id, playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price) VALUES (NULL, ?, ?, 0, 0, 0, 0, 0)");
     $stmt->bind_param("ss", $name, $role);
