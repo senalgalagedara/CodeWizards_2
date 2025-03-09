@@ -21,13 +21,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player - Sprint11 </title>
     <link rel="stylesheet" href="css/style.css">  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .accint
+            {
+            border: none;
+            }
         body {
             background-color: #f8f9fa;
         }
         .profile-container {
-            max-width: 800px;
-            margin: 50px auto;
+            width: 90%;
+            margin: 100px auto;
             padding: 20px;
             background: white;
             border-radius: 10px;
@@ -51,17 +57,18 @@
             gap: 10px;
         }
         .player-name {
-            font-size: 18px;
+            font-size: 30px;
             font-weight: bold;
+
         }
         .player-role {
             font-size: 12px;
             color: gray;
         }
         .player-price {
-            font-size: 20px;
+            font-size: 30px;
             font-weight: bold;
-            color: blue;
+            color: green !important;
         }
         .player-stats {
             background: #e9f5ff;
@@ -98,10 +105,19 @@
     </style>
 </head>
 <body>
-    <a href="players.php">back to players</a>
+<div class="layout-wrapper">
+    <div class="sidebar">
+      <nav class="nav flex-column w-100">
+        <a class="nav-link" href="tournament.php"><i class="fas fa-home"><br><div style="font-size:8px;">Tournament</div></i></a>
+        <a class="nav-link" href="leaderboard.php"><i class="fas fa-file-alt"></i><br><div style="font-size:8px;">Leaderboard</div></a>
+        <a class="nav-link" href="players.php"><i class="fas fa-users"></i><br><div style="font-size:8px;">Players</div></a>
+        <a class="nav-link" href="budget.php"><i class="fas fa-hand-holding-usd"></i><br><div style="font-size:8px;">Budget</div></a>
+      </nav>
+    </div>
 <?php
 include("config.php");
 require_once("playerdit.php");
+session_start(); 
 
 $sql = "
         SELECT player_id, playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price
@@ -142,18 +158,17 @@ if ($result AND $result2) {
         $calcValue = $player->calcValue();
 
         echo "
-        <form action='phpfiles/update_player.php' method='post'>
-        <input type='text' name='player_id' class='accint ' value='{$row['player_id']}' readonly style =''>
+        <form class='playerdit' action='phpfiles/update_player.php' method='post'>
+        <input type='text' name='player_id' class='accint ' value='{$row['player_id']}' readonly style ='display:none;'>
             <div class='profile-container'>
                 <div class='player-header'>
                     <div class='player-info'>
-                        <img src='player.jpg' alt='Player Image' class='player-img'>
                         <div>
                             <div class='player-name'>{$row['playername']}</div>
-                            <div class='player-role'>{$row['role']}</div>
+                            <div class='player-role'>{$row['role']}</div>                          
+
                         </div>
                     </div>
-                    <div class='player-price'><input type='text' name='Price' class='accint' id='email' value='{$calcValue}' readonly></div>
                 </div>
                 <table class='player-stats'>
                     <p><strong>Player Name:<input type='text' name='playername' class='accint ' value='{$row['playername']}'></strong></p>
@@ -163,17 +178,28 @@ if ($result AND $result2) {
                     <p><strong>Balling Avarage:<input type='text' name='bat_avg' class='accint ' value='{$calcBat_avg}' readonly></strong></p>
                     <p><strong>Balling Strike Rate:<input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}' readonly></strong></p>
                     <p><strong>Economy Rate:<input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}' readonly></strong></p>
-                    <button type='submit' class='update-button' name='update'>Update</button>
-                    <button type='submit' class='delete-button'' name='delete' formaction='phpfiles/delete_player.php'>Delete</button>
-                    <button class='buy-button'>Buy</button>
+                    <p><strong>Price:<input type='text' name='Price' style='color:green; font-weight:700; font-size:30px;' class='accint' id='email' value='{$calcValue}' readonly></strong></p>
+
+                    ";
+
+                    if(!isset($_SESSION)){
+                        exit();
+                    }
+                    
+                    else if($_SESSION['username'] == 'adminteam') {
+                        echo "<button type='submit' class='update-button' name='update'>Update</button>
+                        <button type='submit' class='delete-button'' name='delete' formaction='phpfiles/delete_player.php'>Delete</button>";}
+                     else {
+                        
+                    }    }
+                } else {
+                    echo "Error fetching details.";
+                }
+                ?>  
                 </table>
             </div>
-";
-    }
-} else {
-    echo "Error fetching details.";
-}
-?>    
+
+
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
 </body>
 </html>

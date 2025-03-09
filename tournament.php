@@ -4,6 +4,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tournement Summery - Spirit11</title>
     <link rel="stylesheet" href="css/style.css">
@@ -16,7 +18,6 @@
         }
 
         body {
-            background: url('your-background-image.jpg') no-repeat center center/cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -29,7 +30,6 @@
     <!---<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
-<a href="players.php">player list</a>
 <?php
 include("config.php");
 session_start(); 
@@ -66,8 +66,15 @@ else if(isset($_SESSION['username'])){
 }
 ?>
 
-
     <div class="container">
+    <div class="sidebar">
+      <nav class="nav flex-column w-100">
+        <a class="nav-link" href="tournament.php"><i class="fas fa-home"><br><span style="font-size:8px;">Tournament</span></i></a>
+        <a class="nav-link" href="leaderboard.php"><i class="fas fa-file-alt"></i><br><span style="font-size:8px;">Leaderboard</span></a>
+        <a class="nav-link" href="players.php"><i class="fas fa-users"></i><br><span style="font-size:8px;">Players</span></a>
+        <a class="nav-link" href="budget.php"><i class="fas fa-hand-holding-usd"></i><br><span style="font-size:8px;">Budget</span></a>
+      </nav>
+    </div>
         <h1>TOURNAMENT SUMMARY</h1>
         <div class="stats">
     <?php

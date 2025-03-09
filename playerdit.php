@@ -62,37 +62,56 @@ class playerdit {
     }
 
     public function calcBat_SR() {
-        $this->bat_SR = ($this->tot_runs / $this->totBF) *100;
-        return (float)$this->bat_SR;
+        if ($this->totBF == 0) {
+            return 0; // Avoid division by zero
+        }
+        $this->bat_SR = ($this->tot_runs / $this->totBF) * 100;
+        return (float) $this->bat_SR;
     }
-
+    
     public function calcBat_avg() {
+        if ($this->innins == 0) {
+            return 0; // Avoid division by zero
+        }
         $this->bat_avg = ($this->tot_runs / $this->innins);
-        return (float)$this->bat_avg;
+        return (float) $this->bat_avg;
     }
-
+    
     public function calcBall_SR() {
+        if ($this->tot_wickets == 0) {
+            return 0; // Avoid division by zero
+        }
         $this->ball_SR = ($this->tot_balls / $this->tot_wickets);
-        return (float)$this->ball_SR;
+        return (float) $this->ball_SR;
     }
-
+    
     public function calcEcon_Rate() {
+        if ($this->tot_balls == 0) {
+            return 0; // Avoid division by zero
+        }
         $this->econ_rate = ($this->tot_runs / $this->tot_balls) * 6;
-        return (float)$this->econ_rate;
+        return (float) $this->econ_rate;
     }
-
-   
+    
     public function calcPlayerPoint() {
-        $x = ($this->tot_runs/5);
-        $y = (($this->bat_avg *8)/10    );
-        $c = (500 / $this->ball_SR);
-        $v = (140 / $this->econ_rate);
+        $x = ($this->tot_runs / 5);
+        
+        $y = ($this->bat_avg > 0) ? (($this->bat_avg * 8) / 10) : 0;
+        
+        $c = ($this->ball_SR > 0) ? (500 / $this->ball_SR) : 0;
+        
+        $v = ($this->econ_rate > 0) ? (140 / $this->econ_rate) : 0;
+        
         $this->P_point = $x + $y + $c + $v;
-        return (float)$this->P_point;
-    } 
+        return (float) $this->P_point;
+    }
+    
     public function calcValue() {
-        $this->price = (((float)$this->P_point)*9 + 100) * 1000;
-        return (float)$this->price;
+        if ($this->P_point == 0) {
+            return 100000; // Default base price when P_point is zero
+        }
+        $this->price = ($this->P_point * 9 + 100) * 1000;
+        return number_format((float) $this->price, 2, '.', '');
     }
 
     
