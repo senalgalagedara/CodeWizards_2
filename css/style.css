@@ -1,0 +1,161 @@
+ body {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+ }
+.form-box{
+    height: 400px;
+    width: 400px;
+    position: relative;
+    margin: 6% auto;
+    background: rgba(255, 255, 255,0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 5px;
+    overflow: hidden;
+  }
+
+  .button-box{
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 20px 9px #ff61241f;
+    border-radius: 30px;
+  }
+
+
+  #login_btns{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right, #09a1ff,#6ec6fd);
+    border-radius: 30px;
+    transition: .5s;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  .login_form, .reg_form{
+    top: 120px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+  }
+
+  .inputbox {
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #565656;
+    outline: none;
+    background: transparent;
+  }
+
+  .login_submit ,.signup_submit{
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: linear-gradient(to right, #09a1ff,#6ec6fd);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    font-weight: bold;
+  }
+
+  .rem_checkbox{
+    margin: 30px 10px 30px 0;
+  }
+
+  span{
+    color: #272727;
+    font-size: 12px;
+    bottom:66px;
+    position:absolute;
+  }
+
+  ::placeholder {
+    color: black;
+  }
+
+  #login_form{
+    left: 50px;
+  }
+
+  #reg_form{
+    left: 450px;
+  }
+
+  .headd{
+    font-family: "Roboto", sans-serif;
+    font-size: 30px !important;
+    text-align: center;
+
+  }
+
+  .signpara{
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 0px;
+    margin-top: -10px;
+    margin-bottom: 40px;
+  }
+  p{
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+
+  }
+  .usertable
+  {
+    width: 50%;
+    margin: 6% auto;
+    background: rgba(255, 255, 255,0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding:30px 5px;
+    overflow: hidden;
+    text-align: center;
+
+
+  }
+  .usertable .accdetails
+  {
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    text-align: left;
+    padding: 10px 50px !important;
+  }
+  .useraccint
+  {
+    background-color: transparent;
+    border: none;
+    cursor:default;
+  }
+  .logout
+  {
+    background-color: red;
+    width: 15%;
+    display: block;
+    margin: auto !important;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 500;
+  }
+  .topic{
+    font-family: "Roboto", sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    padding-top: 70px;
+    padding-bottom: -60px;
+  }

@@ -41,7 +41,7 @@ $result = $conn->query("SELECT * FROM player ORDER BY player_id DESC");
         </tbody>
     </table>
 
-    <a href="add_player.php"><button type="submit" class="btn btn-success">Add Player</button></a>
+    <a href="phpfiles/add_player.php"><button type="submit" class="btn btn-success">Add Player</button></a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

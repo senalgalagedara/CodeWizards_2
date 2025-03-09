@@ -1,5 +1,5 @@
 <?php
-include ("config.php");
+include ("../config.php");
 
 if(isset($_POST['update']) )
 {
@@ -24,7 +24,7 @@ if(isset($_POST['update']) )
     $result = $conn->query($sql);
 
     if ($result === TRUE) {
-        header("Location: player_details.php?id=$id");
+        header("Location: ../player_details.php?id=$id");
     }
     
     else{

@@ -1,5 +1,5 @@
 <?php
-require_once 'playerdit.php';
+    require_once 'playerdit.php';
 
     if (isset($_GET['id'])) {
         $id = intval($_GET['id']);
@@ -21,16 +21,87 @@ require_once 'playerdit.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player - Sprint11 </title>
     <link rel="stylesheet" href="css/style.css">  
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+        .player-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .player-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .player-role {
+            font-size: 12px;
+            color: gray;
+        }
+        .player-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: blue;
+        }
+        .player-stats {
+            background: #e9f5ff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .buy-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            right: -500px;
+        
+        }
+        .update-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<h2 id="newarrivals" class="topic" style="margin-top: 40px;">Account Information</h2>
-<table>
-    <tr>
-    <tbody>
-    <?php
+    <a href="players.php">back to players</a>
+<?php
 include("config.php");
 require_once("playerdit.php");
-
 
 $sql = "
         SELECT player_id, playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price
@@ -71,66 +142,38 @@ if ($result AND $result2) {
         $calcValue = $player->calcValue();
 
         echo "
-        <form action='update_player.php' method='post'>
-            <table>
-                <tr>
-                    <th colspan='2'></th>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>User Id</td>
-                    <td><input type='text' name='player_id' class='accint ' value='{$row['player_id']}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Player Name</td>
-                    <td><input type='text' name='playername' class='accint ' value='{$row['playername']}'></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Role</td>
-                    <td><input type='text' name='role' class='accint ' value='{$row['role']}'></td>
-                </tr>
-                
-                <tr>
-                    <td class= 'accdetails'>Batting Strike Rate</td>
-                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_SR}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Batting Avarage</td>
-                    <td><input type='text' name='bat_avg' class='accint ' value='{$calcBat_avg}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Ball Strike Rate</td>
-                    <td><input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Economy Rate</td>
-                    <td><input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Player Point</td>
-                    <td><input type='text' name='p_point' class='accint ' value='{$calcPlayerPoint}' readonly></td>
-                </tr>
-                <tr>
-                    <td class= 'accdetails'>Price</td>
-                    <td><input type='text' name='Price' class='accint' id='email' value='{$calcValue}' readonly></td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type='submit' class='updatebtn' name='update'>Update</button>
-                    </td>
-                    <td>
-                        <button type='submit' class='deletebtn' name='delete' formaction='deleteuser.php'>Delete</button>
-                    </td>
-                </tr>
-            </table>
-        </form>";
+        <form action='phpfiles/update_player.php' method='post'>
+        <input type='text' name='player_id' class='accint ' value='{$row['player_id']}' readonly style =''>
+            <div class='profile-container'>
+                <div class='player-header'>
+                    <div class='player-info'>
+                        <img src='player.jpg' alt='Player Image' class='player-img'>
+                        <div>
+                            <div class='player-name'>{$row['playername']}</div>
+                            <div class='player-role'>{$row['role']}</div>
+                        </div>
+                    </div>
+                    <div class='player-price'><input type='text' name='Price' class='accint' id='email' value='{$calcValue}' readonly></div>
+                </div>
+                <table class='player-stats'>
+                    <p><strong>Player Name:<input type='text' name='playername' class='accint ' value='{$row['playername']}'></strong></p>
+                    <p><strong>Role:<input type='text' name='role' class='accint ' value='{$row['role']}'></strong></p>
+                    <p><strong>Player Point:<input type='text' name='p_point' class='accint ' value='{$calcPlayerPoint}' readonly></strong></p>
+                    <p><strong>Batting Strike Rate:<input type='text' name='bat_SR' class='accint ' value='{$calcBat_SR}' readonly></strong></p>
+                    <p><strong>Balling Avarage:<input type='text' name='bat_avg' class='accint ' value='{$calcBat_avg}' readonly></strong></p>
+                    <p><strong>Balling Strike Rate:<input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}' readonly></strong></p>
+                    <p><strong>Economy Rate:<input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}' readonly></strong></p>
+                    <button type='submit' class='update-button' name='update'>Update</button>
+                    <button type='submit' class='delete-button'' name='delete' formaction='phpfiles/delete_player.php'>Delete</button>
+                    <button class='buy-button'>Buy</button>
+                </table>
+            </div>
+";
     }
 } else {
     echo "Error fetching details.";
 }
-?>
-
-</tr>
-</tbody>
-</table>
+?>    
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
 </body>
 </html>
