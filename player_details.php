@@ -9,7 +9,8 @@ require_once 'playerdit.php';
             exit;
         }
     } else {
-        echo "Invalid request.";
+        header("Location: player_details.php?id=$id");
+        //echo "Invalid request.";
         exit;
     }
 ?>
@@ -90,27 +91,27 @@ if ($result AND $result2) {
                 
                 <tr>
                     <td class= 'accdetails'>Batting Strike Rate</td>
-                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_SR}'></td>
+                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_SR}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Batting Avarage</td>
-                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_avg}'></td>
+                    <td><input type='text' name='bat_avg' class='accint ' value='{$calcBat_avg}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Ball Strike Rate</td>
-                    <td><input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}'></td>
+                    <td><input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Economy Rate</td>
-                    <td><input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}'></td>
+                    <td><input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Player Point</td>
-                    <td><input type='text' name='p_point' class='accint ' value='{$calcPlayerPoint}'></td>
+                    <td><input type='text' name='p_point' class='accint ' value='{$calcPlayerPoint}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Price</td>
-                    <td><input type='text' name='Price' class='accint' id='email' value='{$calcValue}'></td>
+                    <td><input type='text' name='Price' class='accint' id='email' value='{$calcValue}' readonly></td>
                 </tr>
                 <tr>
                     <td>

@@ -84,7 +84,7 @@ class playerdit {
    
     public function calcPlayerPoint() {
         $x = ($this->tot_runs/5);
-        $y = ($this->bat_SR * 0.8);
+        $y = (($this->bat_avg *8)/10    );
         $c = (500 / $this->ball_SR);
         $v = (140 / $this->econ_rate);
         $this->P_point = $x + $y + $c + $v;
