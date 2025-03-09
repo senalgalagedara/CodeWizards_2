@@ -59,6 +59,7 @@ $result = $conn->query("SELECT * FROM player ORDER BY player_id DESC");
       overflow-y: auto;
       padding: 1rem;
     }
+    
     .navbar button {
     padding: 8px 15px;
     border: none;
@@ -85,15 +86,15 @@ $result = $conn->query("SELECT * FROM player ORDER BY player_id DESC");
     }
     .navbars {
         background-color: red;
-    width: 20%;
-    padding: 10px 20px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px !important;
-}
+        width: 20%;
+        padding: 10px 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px !important;
+    }
 
     .player-card {
       background-color: #fff;

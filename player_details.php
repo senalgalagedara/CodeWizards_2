@@ -111,6 +111,7 @@
         <a class="nav-link" href="tournament.php"><i class="fas fa-home"><br><div style="font-size:8px;">Tournament</div></i></a>
         <a class="nav-link" href="leaderboard.php"><i class="fas fa-file-alt"></i><br><div style="font-size:8px;">Leaderboard</div></a>
         <a class="nav-link" href="players.php"><i class="fas fa-users"></i><br><div style="font-size:8px;">Players</div></a>
+        <a class="nav-link" href="select_Team.php"><i class="fas fa-arrow-up"></i><br><div style="font-size:8px;">Team</div></a>
         <a class="nav-link" href="budget.php"><i class="fas fa-hand-holding-usd"></i><br><div style="font-size:8px;">Budget</div></a>
       </nav>
     </div>

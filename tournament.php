@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +15,8 @@
             font-family: Arial, sans-serif;
         }
 
-        body {
+        .bodyy {
+            margin-top: -400px;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -69,12 +68,14 @@ else if(isset($_SESSION['username'])){
     <div class="container">
     <div class="sidebar">
       <nav class="nav flex-column w-100">
-        <a class="nav-link" href="tournament.php"><i class="fas fa-home"><br><span style="font-size:8px;">Tournament</span></i></a>
-        <a class="nav-link" href="leaderboard.php"><i class="fas fa-file-alt"></i><br><span style="font-size:8px;">Leaderboard</span></a>
-        <a class="nav-link" href="players.php"><i class="fas fa-users"></i><br><span style="font-size:8px;">Players</span></a>
-        <a class="nav-link" href="budget.php"><i class="fas fa-hand-holding-usd"></i><br><span style="font-size:8px;">Budget</span></a>
+        <a class="nav-link" href="tournament.php"><i class="fas fa-home"><br><div style="font-size:8px;">Tournament</div></i></a>
+        <a class="nav-link" href="leaderboard.php"><i class="fas fa-file-alt"></i><br><div style="font-size:8px;">Leaderboard</div></a>
+        <a class="nav-link" href="players.php"><i class="fas fa-users"></i><br><div style="font-size:8px;">Players</div></a>
+        <a class="nav-link" href="select_Team.php"><i class="fas fa-arrow-up"></i><br><div style="font-size:8px;">Team</div></a>
+        <a class="nav-link" href="budget.php"><i class="fas fa-hand-holding-usd"></i><br><div style="font-size:8px;">Budget</div></a>
       </nav>
     </div>
+    <div class = "bodyy">
         <h1>TOURNAMENT SUMMARY</h1>
         <div class="stats">
     <?php
