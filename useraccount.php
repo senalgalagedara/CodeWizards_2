@@ -34,7 +34,7 @@
 
 </head>
 <body>
-
+<a href="tournament.php">back to home</a>
 <div >
 <table>
     <tr>

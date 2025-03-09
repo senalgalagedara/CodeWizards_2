@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Add Player</title>
 </head>
 <body>
+    <a href="../players.php">back to player list</a>
     <h4>Add New Player</h4>
     <form action="add_player.php" method="POST">
         <div>
