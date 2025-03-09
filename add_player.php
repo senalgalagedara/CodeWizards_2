@@ -3,47 +3,87 @@ include("config.php");
 require_once 'playerdit.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["playername"];
-    $role = $_POST["role"];
+    $name = trim($_POST["playername"]);
+    $role = trim($_POST["role"]);
 
-    $player = new playerdit($name, $role);
+    $player_runs = isset($_POST["player_runs"]) && $_POST["player_runs"] !== "" ? (int)$_POST["player_runs"] : 0;
+    $p_TBF = isset($_POST["p_TBF"]) && $_POST["p_TBF"] !== "" ? (int)$_POST["p_TBF"] : 0;  
+    $p_innins = isset($_POST["p_innins"]) && $_POST["p_innins"] !== "" ? (int)$_POST["p_innins"] : 0;
+    $p_totball = isset($_POST["p_totball"]) && $_POST["p_totball"] !== "" ? (int)$_POST["p_totball"] : 0; 
+    $p_wickets = isset($_POST["p_wickets"]) && $_POST["p_wickets"] !== "" ? (int)$_POST["p_wickets"] : 0;
 
-    $stmt = $conn->prepare("INSERT INTO player (player_id, playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price) VALUES (NULL, ?, ?, 0, 0, 0, 0, 0)");
+    $player = new playerdit($name, $role, $player_runs, $p_TBF, $p_innins, $p_totball, $p_wickets);
+
+ 
+
+    echo "<pre>";
+    print_r($player);
+    echo "</pre>";
+
+    $stmt = $conn->prepare("INSERT INTO player (playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price) VALUES (?, ?, 0, 0, 0, 0, 0)");
     $stmt->bind_param("ss", $name, $role);
+
     if ($stmt->execute()) {
-        header("Location: players.php"); 
-        exit();
+        $player_id = $conn->insert_id; 
+
+        $stmt1 = $conn->prepare("INSERT INTO player_stat (player_id, p_runs, p_tbf, p_innins, p_totballs, p_wickets) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt1->bind_param("iiiiii", $player_id, $player_runs, $p_TBF, $p_innins, $p_totball, $p_wickets);
+
+        if ($stmt1->execute()) {
+            header("Location: players.php");
+            exit();
+        } else {
+            echo "Error inserting into player_stat: " . $stmt1->error;
+        }
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error inserting into player: " . $stmt->error;
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
-    <title>Document</title>
+    <title>Add Player</title>
 </head>
 <body>
-<h4 class="mt-4">Add New Player</h4>
+    <h4>Add New Player</h4>
     <form action="add_player.php" method="POST">
-        <div class="mb-3">
-            <label class="form-label">Player Name</label>
-            <input type="text" name="playername" class="form-control" required>
+        <div>
+            <label>Player Name</label>
+            <input type="text" name="playername" required>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Role</label>
-            <select name="role" class="form-control" required>
+        <div>
+            <label>Role</label>
+            <select name="role" required>
                 <option value="Batsman">Batsman</option>
                 <option value="Bowler">Bowler</option>
                 <option value="All-Rounder">All-Rounder</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success">Add Player</button>
+        <div>
+            <label>Player Runs</label>
+            <input type="number" name="player_runs" required min="0">
+        </div>
+        <div>
+            <label>Player Total Balls Faced</label>
+            <input type="number" name="p_TBF" required min="0">
+        </div>
+        <div>
+            <label>Player Innings</label>
+            <input type="number" name="p_innins" required min="0">
+        </div>
+        <div>
+            <label>Player Total Balls</label>
+            <input type="number" name="p_totball" required min="0">
+        </div>
+        <div>
+            <label>Player Wickets</label>
+            <input type="number" name="p_wickets" required min="0">
+        </div>
+        <button type="submit">Add Player</button>
     </form>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

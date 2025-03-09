@@ -28,25 +28,46 @@ require_once 'playerdit.php';
     <tbody>
     <?php
 include("config.php");
+require_once("playerdit.php");
+
 
 $sql = "
         SELECT player_id, playername, role, p_point, bat_SR, ball_SR, Econ_rate, Price
         FROM player
         WHERE player_id = '$id';
 ";
+$sql2 =" SELECT player_id, p_runs, p_tbf, p_innins, p_totballs, p_wickets
+        FROM player_stat
+        WHERE player_id = '$id'
+";
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
 
-$result = mysqli_query($conn, $sql);
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['player_id'];
-        $playername = $row['playername'];
+if ($result AND $result2) {
+    while ($row = mysqli_fetch_assoc($result) AND $row2 = mysqli_fetch_assoc($result2)) {
         $role = $row['role'];
-        $ppoint = $row['p_point'];
+        $name = $row['playername'];
         $bat_sr = $row['bat_SR'];
         $ball_sr = $row['ball_SR'];
         $e_rate = $row['Econ_rate'];
         $price = $row['Price'];
+
+        $player->setPlayerName($name);
+        $player->setRole($role);
+
+        $player->setTotruns($row2['p_runs']);
+        $player->setTotBF($row2['p_tbf']);
+        $player->setInnins($row2['p_innins']);
+        $player->setTotBallF($row2['p_totballs']);
+        $player->setTotwickets($row2['p_wickets']);
+
+        $calcBat_SR = $player->calcBat_SR();
+        $calcBat_avg = $player->calcBat_avg();
+        $calcBall_SR = $player->calcBall_SR();
+        $calcEcon_Rate = $player->calcEcon_Rate();
+        $calcPlayerPoint = $player->calcPlayerPoint();
+        $calcValue = $player->calcValue();
 
         echo "
         <form action='update_player.php' method='post'>
@@ -56,34 +77,40 @@ if ($result) {
                 </tr>
                 <tr>
                     <td class= 'accdetails'>User Id</td>
+                    <td><input type='text' name='player_id' class='accint ' value='{$row['player_id']}' readonly></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Player Name</td>
-                    <td><input type='text' name='playername' class='accint ' value='$playername'></td>
+                    <td><input type='text' name='playername' class='accint ' value='{$row['playername']}'></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Role</td>
-                    <td><input type='text' name='role' class='accint ' value='$role'></td>
+                    <td><input type='text' name='role' class='accint ' value='{$row['role']}'></td>
                 </tr>
-                <tr>
-                    <td class= 'accdetails'>Player Point</td>
-                    <td><input type='text' name='p_point' class='accint ' value='$ppoint'></td>
-                </tr>
+                
                 <tr>
                     <td class= 'accdetails'>Batting Strike Rate</td>
-                    <td><input type='text' name='bat_SR' class='accint ' value='$bat_sr'></td>
+                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_SR}'></td>
+                </tr>
+                <tr>
+                    <td class= 'accdetails'>Batting Avarage</td>
+                    <td><input type='text' name='bat_SR' class='accint ' value='{$calcBat_avg}'></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Ball Strike Rate</td>
-                    <td><input type='text' name='ball_SR' class='accint ' value='$ball_sr'></td>
+                    <td><input type='text' name='ball_SR' class='accint ' value='{$calcBall_SR}'></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Economy Rate</td>
-                    <td><input type='text' name='Econ_rate' class='accint' id='email' value='$e_rate'></td>
+                    <td><input type='text' name='Econ_rate' class='accint' id='email' value='{$calcEcon_Rate}'></td>
+                </tr>
+                <tr>
+                    <td class= 'accdetails'>Player Point</td>
+                    <td><input type='text' name='p_point' class='accint ' value='{$calcPlayerPoint}'></td>
                 </tr>
                 <tr>
                     <td class= 'accdetails'>Price</td>
-                    <td><input type='text' name='price' class='accint' id='email' value='$price'></td>
+                    <td><input type='text' name='Price' class='accint' id='email' value='{$calcValue}'></td>
                 </tr>
                 <tr>
                     <td>

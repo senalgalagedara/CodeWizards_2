@@ -1,5 +1,8 @@
 <?php
+include("config.php");
+
 class playerdit {
+    private $conn;
     private $player_id;
     private $p_name;
     private $role;
@@ -10,9 +13,11 @@ class playerdit {
     private $price;
 
     private $tot_runs;
-    private $tot_balls;
+    private $totBF;
     private $innins;
+    private $tot_balls;
     private $tot_wickets;
+
     private $bat_avg;
 
     public function __construct($p_name, $role, $P_point = 0, $bat_SR = 0, $ball_SR = 0, $econ_rate = 0, $price = 0) {
@@ -24,19 +29,22 @@ class playerdit {
         $this->econ_rate = $econ_rate;
         $this->price = $price;
     }
-
-    public function setBattingStats($tot_runs, $tot_balls, $innins) {
+    public function setTotruns($tot_runs) {
         $this->tot_runs = $tot_runs;
-        $this->tot_balls = $tot_balls;
+    }
+    public function setTotBF($totBF) {
+        $this->totBF = $totBF;
+    }
+    public function setInnins($innins) {
         $this->innins = $innins;
     }
-
-    public function setBowlingStats($tot_wickets, $tot_balls, $tot_runs) {
-        $this->tot_wickets = $tot_wickets;
+    public function setTotBallF($tot_balls) {
         $this->tot_balls = $tot_balls;
-        $this->tot_runs = $tot_runs;
     }
-
+    public function setTotwickets($tot_wickets) {
+        $this->tot_wickets = $tot_wickets;
+    }
+    
     public function getName() {
         return $this->p_name;
     }
@@ -53,36 +61,41 @@ class playerdit {
         return $this->P_point;
     }
 
-    public function calcPlayerPoint() {
-        $this->P_point = (($this->bat_SR / 5) + ($this->bat_SR * 0.8)) + ((500 / $this->ball_SR) + (140 / $this->econ_rate));
-        return $this->P_point;
-    }
-
     public function calcBat_SR() {
-        $this->bat_SR = ($this->tot_runs / $this->tot_balls) * 100;
-        return $this->bat_SR;
+        $this->bat_SR = ($this->tot_runs / $this->totBF) *100;
+        return (float)$this->bat_SR;
     }
 
     public function calcBat_avg() {
         $this->bat_avg = ($this->tot_runs / $this->innins);
-        return $this->bat_avg;
+        return (float)$this->bat_avg;
     }
 
     public function calcBall_SR() {
         $this->ball_SR = ($this->tot_balls / $this->tot_wickets);
-        return $this->ball_SR;
+        return (float)$this->ball_SR;
     }
 
     public function calcEcon_Rate() {
         $this->econ_rate = ($this->tot_runs / $this->tot_balls) * 6;
-        return $this->econ_rate;
+        return (float)$this->econ_rate;
     }
 
+   
+    public function calcPlayerPoint() {
+        $x = ($this->tot_runs/5);
+        $y = ($this->bat_SR * 0.8);
+        $c = (500 / $this->ball_SR);
+        $v = (140 / $this->econ_rate);
+        $this->P_point = $x + $y + $c + $v;
+        return (float)$this->P_point;
+    } 
     public function calcValue() {
-        $this->price = (9 * ($this->P_point) + 100) * 100;
-        return $this->price;
+        $this->price = (((float)$this->P_point)*9 + 100) * 1000;
+        return (float)$this->price;
     }
 
+    
     public static function getById($id) {
         include("config.php");
 
@@ -94,6 +107,7 @@ class playerdit {
             $data = $result->fetch_assoc();
 
             $player = new playerdit(
+                $conn,
                 $data['playername'],
                 $data['role'],
                 $data['p_point'],
@@ -108,5 +122,15 @@ class playerdit {
         }
         return null;
     }
+    public function setPlayername($playername) {
+        $this->p_name = $playername;
+    }
+    public function setRole($role) {
+        $this->role = $role;
+    }
+
+
+
+    
 }
 ?>

@@ -1,36 +1,26 @@
 <?php
-include ("config.php");
+require_once 'playerdit.php';
+require_once 'config.php';
 
-if(isset($_POST['update']) )
-{
+if (isset($_POST['update'])) {
     $id = $_POST['player_id'];
-    $playername = $_POST['playername'];
-    $role = $_POST['role'];
-    $p_point = $_POST['p_point'];
-    $bat_SR = $_POST['bat_SR'];
-    $ball_SR = $_POST['ball_SR'];
-    $econ_r = $_POST['Econ_rate'];
-    $price = $_POST['Price'];
 
+    $player = playerdit::getById($id); 
 
-    $sql = "UPDATE player SET playername='$playername', role='$role',p_point='$p_point', bat_SR ='$bat_SR' ,ball_SR='$ball_SR',Econ_rate='$econ_r',Price = '$price' WHERE player_id = '$id'";    
+    if ($player) {
+        $player->setPlayerName($_POST['playername']);
+        $player->setRole($_POST['role']);
 
-    $result = $conn->query($sql);
-
-    if($result === TRUE)    
-    {
-        header("location:player_details.php");
+        if ($player->update()) {
+            header("location:player_details.php");
+            exit();
+        } else {
+            echo "<script>alert('Update failed.');</script>";
+        }
+    } else {
+        echo "<script>alert('Player not found.');</script>";
     }
-    else{
-        echo "<script>
-    alert('details not complete');
-          </script>
-        ";
-    }
-
-}else{ echo "<script>
-    alert('details not complete');
-          </script>
-        ";}
-
+} else {
+    echo "<script>alert('Invalid request.');</script>";
+}
 ?>
